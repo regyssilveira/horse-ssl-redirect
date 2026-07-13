@@ -104,4 +104,4 @@ O registro `THorseSSLRedirectConfig` possui as seguintes opções:
 
 ## 📄 Licença
 
-Este projeto é licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está licenciado sob a [Apache License 2.0](LICENSE).
