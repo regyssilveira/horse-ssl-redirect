@@ -18,3 +18,6 @@ dunitx-results.xml
 *.or
 tests/Tests
 samples/Console
+boss-lock.json
+modules/
+test-bin/
