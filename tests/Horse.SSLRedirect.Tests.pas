@@ -55,44 +55,44 @@ var
   LConfigCustomStatus: THorseSSLRedirectConfig;
 begin
   // 1. Configuração padrão (RedirectLocalhost = False, TrustProxy = True, SSLPort = 443, Status = 301)
-  THorse.Get('/default', [THorseCallback(SSLRedirect())],
-    THorseCallback(
-      procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
-      begin
-        Res.Send('OK-DEFAULT');
-      end));
+  THorse.Use('/default', SSLRedirect());
+  THorse.Get('/default',
+    procedure(Req: THorseRequest; Res: THorseResponse)
+    begin
+      Res.Send('OK-DEFAULT');
+    end);
 
   // 2. Configuração com RedirectLocalhost = True
   LConfigRedirectLocal := THorseSSLRedirectConfig.Default;
   LConfigRedirectLocal.RedirectLocalhost := True;
-  THorse.Get('/redirect-local', [THorseCallback(SSLRedirect(LConfigRedirectLocal))],
-    THorseCallback(
-      procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
-      begin
-        Res.Send('OK-REDIRECT-LOCAL');
-      end));
+  THorse.Use('/redirect-local', SSLRedirect(LConfigRedirectLocal));
+  THorse.Get('/redirect-local',
+    procedure(Req: THorseRequest; Res: THorseResponse)
+    begin
+      Res.Send('OK-REDIRECT-LOCAL');
+    end);
 
   // 3. Configuração com Porta Customizada
   LConfigCustomPort := THorseSSLRedirectConfig.Default;
   LConfigCustomPort.RedirectLocalhost := True;
   LConfigCustomPort.SSLPort := 8443;
-  THorse.Get('/custom-port', [THorseCallback(SSLRedirect(LConfigCustomPort))],
-    THorseCallback(
-      procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
-      begin
-        Res.Send('OK-CUSTOM-PORT');
-      end));
+  THorse.Use('/custom-port', SSLRedirect(LConfigCustomPort));
+  THorse.Get('/custom-port',
+    procedure(Req: THorseRequest; Res: THorseResponse)
+    begin
+      Res.Send('OK-CUSTOM-PORT');
+    end);
 
   // 4. Configuração com Status Customizado (302)
   LConfigCustomStatus := THorseSSLRedirectConfig.Default;
   LConfigCustomStatus.RedirectLocalhost := True;
   LConfigCustomStatus.RedirectStatus := 302;
-  THorse.Get('/custom-status', [THorseCallback(SSLRedirect(LConfigCustomStatus))],
-    THorseCallback(
-      procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
-      begin
-        Res.Send('OK-CUSTOM-STATUS');
-      end));
+  THorse.Use('/custom-status', SSLRedirect(LConfigCustomStatus));
+  THorse.Get('/custom-status',
+    procedure(Req: THorseRequest; Res: THorseResponse)
+    begin
+      Res.Send('OK-CUSTOM-STATUS');
+    end);
 
   TThread.CreateAnonymousThread(
     procedure
